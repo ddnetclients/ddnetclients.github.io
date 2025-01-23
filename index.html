@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>All DDNet Custom Clients</title>
+    <title>DDNet Clients Directory</title>
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Silkscreen&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
@@ -30,163 +31,195 @@
                         url('https://ybis.ru/wp-content/uploads/2023/09/galaksi-speis-10.webp') no-repeat center center fixed;
             background-size: cover;
             backdrop-filter: blur(25px);
-            font-family: 'Comic Neue', cursive;
+            font-family: 'Silkscreen', cursive;
             color: var(--text-primary);
             transition: all 0.3s ease;
         }
 
         .client-card {
-            background: rgba(var(--bg-secondary), 0.9);
-            border: 1px solid var(--border);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: repeating-linear-gradient(
+                45deg,
+                rgba(26, 26, 46, 0.9),
+                rgba(26, 26, 46, 0.9) 10px,
+                rgba(32, 32, 60, 0.9) 10px,
+                rgba(32, 32, 60, 0.9) 20px
+            );
+            border: 2px solid var(--accent);
+            box-shadow: 0 0 15px rgba(75, 0, 130, 0.5);
         }
 
-        ::-webkit-scrollbar {
-            width: 8px;
-            background: var(--bg-secondary);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--accent);
-            border-radius: 4px;
-        }
-
-        .telegram-btn {
-            background: #0088cc;
-            padding: 12px;
-            border-radius: 50%;
-            transition: all 0.3s ease;
-        }
-
-        .theme-btn {
+        #featuresModal {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            padding: 14px;
-            border-radius: 50%;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            z-index: 100;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-height: 90vh;
+            overflow-y: auto;
+            width: 90%;
+            max-width: 600px;
         }
 
-        .cat-image {
-            position: fixed;
-            z-index: 1;
-            width: 80px;
-            opacity: 0.7;
-            border-radius: 8px;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
+        #featuresList {
+            max-height: 60vh;
+            overflow-y: auto;
         }
 
         @media (max-width: 768px) {
-            .cat-image {
-                display: none;
-            }
-            
             .client-card {
                 margin: 8px 0;
                 padding: 12px;
             }
             
             .filter-btn {
-                font-size: 0.8rem;
-                padding: 8px 12px;
+                font-size: 0.6rem;
+                padding: 6px 10px;
             }
             
             h1 {
-                font-size: 1.8rem;
+                font-size: 1.5rem;
                 padding: 0 10px;
-            }
-            
-            .telegram-btn {
-                left: 10px;
-                top: 10px;
+                margin-top: 40px;
             }
             
             .language-buttons {
-                right: 10px;
-                top: 10px;
+                top: 15px;
+                right: 15px;
+                transform: scale(0.8);
+            }
+            
+            #uselessZone {
+                columns: 1 !important;
             }
         }
     </style>
 </head>
 <body class="min-h-screen">
-    <!-- Telegram Button -->
     <div class="fixed top-5 left-5 z-50">
         <a href="https://t.me/frotiddnet" target="_blank" class="telegram-btn hover:rotate-12">
             <i class="fab fa-telegram-plane text-white text-2xl"></i>
         </a>
     </div>
 
-    <!-- Language Buttons -->
-    <div class="fixed top-5 right-5 z-50 flex gap-2">
-        <button class="px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg text-sm md:text-base transition-colors" 
-                onclick="alert('Русский? Ну, попробуй угадать, где он 😏')">RU</button>
-        <button class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-sm md:text-base transition-colors" 
-                onclick="alert('You are already here! Stop clicking me! 😾')">ENG</button>
+    <div class="language-buttons fixed top-5 right-5 z-50 flex gap-2">
+        <button class="px-3 py-1 bg-purple-600 hover:bg-purple-700 rounded-lg text-xs transition-colors" 
+                onclick="alert('Ты серьезно? Здесь же ничего нет! 😹')">RU</button>
+        <button class="px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded-lg text-xs transition-colors" 
+                onclick="alert('Congratulations! You found the useless button! 🎉')">ENG</button>
     </div>
 
-    <!-- Theme Toggle -->
     <button class="theme-btn" onclick="toggleTheme()">
         <i class="fas fa-moon text-purple-500" id="themeIcon"></i>
     </button>
 
-    <!-- Cat Images -->
-    <img src="https://cataas.com/cat" class="cat-image" style="top: 10px; left: 10px;">
-    <img src="https://cataas.com/cat/gif" class="cat-image" style="top: 10px; right: 10px;">
-    <img src="https://cataas.com/cat/says/meow" class="cat-image" style="bottom: 10px; left: 10px;">
-
     <div class="container mx-auto px-2 md:px-4 py-6">
-        <h1 class="text-3xl md:text-4xl font-bold text-center mb-6">
+        <h1 class="text-3xl md:text-4xl font-bold text-center mb-6 pt-4">
             <i class="fas fa-dizzy mr-2 md:mr-3 text-purple-500"></i>
-            All DDRaceNetwork Custom Clients
-            <span class="text-sm md:text-lg block mt-1 md:mt-2">(Now with extra chaos!)</span>
+            DDNet Clients Directory
         </h1>
 
         <div class="flex flex-wrap justify-center gap-2 md:gap-3 mb-6">
-            <button class="filter-btn px-3 py-1 md:px-4 md:py-2 bg-gray-800 hover:bg-gray-700 rounded-lg text-xs md:text-base transition-colors" 
-                    data-filter="all">All 🤡</button>
+            <button class="filter-btn px-3 py-1 md:px-4 md:py-2 bg-gray-800 hover:bg-gray-700 rounded-lg text-xs md:text-base transition-colors ring-2 ring-purple-400" 
+                    data-filter="all">All Clients</button>
             <button class="filter-btn px-3 py-1 md:px-4 md:py-2 bg-green-600 hover:bg-green-700 rounded-lg text-xs md:text-base transition-colors" 
-                    data-filter="legit">Boring 😇</button>
+                    data-filter="legit">Legit</button>
             <button class="filter-btn px-3 py-1 md:px-4 md:py-2 bg-red-600 hover:bg-red-700 rounded-lg text-xs md:text-base transition-colors" 
-                    data-filter="hack">Chaos 😈</button>
-            <button class="filter-btn px-3 py-1 md:px-4 md:py-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-xs md:text-base transition-colors" 
-                    onclick="alert('IDK maybe some support Android? Go cry to Samsung 🤷♂️')">Android? 🤖</button>
+                    data-filter="hack">Chaos</button>
         </div>
 
         <div class="space-y-4 md:space-y-6" id="clientsContainer"></div>
 
-        <div class="mt-8 p-4 md:p-6 bg-gray-800 rounded-lg border-2 border-purple-600">
-            <h2 class="text-xl md:text-3xl font-bold mb-4 text-red-500 text-center">⚠️ LEGAL DISCLAIMERS (NOT) ⚠️</h2>
-            <div class="space-y-2 md:space-y-4 text-sm md:text-xl">
-                <p class="text-center">• These clients may contain traces of pure cringe</p>
-                <p class="text-center">• Using hacks may summon your mom 👵</p>
-                <p class="text-center">• We accept payment in memes and cat pics 🐈</p>
-                <p class="text-center">• DDNet is not responsible for spontaneous combustion 🔥</p>
-                <p class="text-center">• If your computer crashes, blame the cat 🐱</p>
-                <p class="text-center">• All features are purely fictional (maybe) 🤔</p>
-                <p class="mt-4 md:mt-6 text-lg md:text-2xl text-purple-400 text-center">
-                    Made by Froti | 
-                    <a href="https://t.me/alena000b" class="underline hover:text-purple-300">Send nudes (of tees)</a><br>
-                    <span class="text-sm text-gray-400">(Suggest your client via Telegram!)</span>
+        <!-- HYPER MEGA USELESS ZONE -->
+        <div class="mt-8 p-4 md:p-6 bg-gray-800 rounded-lg border-4 border-dashed border-purple-600">
+            <h2 class="text-xl md:text-4xl font-bold mb-6 text-red-500 text-center animate-pulse">
+                💀 BRAIN MELTER 9000 (57 USELESS THINGS INSIDE!) 💀
+            </h2>
+            <div id="uselessZone" class="space-y-2 md:space-y-3 text-xs md:text-lg columns-2 md:columns-4">
+                <!-- 57 Useless Things -->
+                <p class="text-center">► 57% chance of skill issue</p>
+                <p class="text-center">► Contains 57 hidden dummies</p>
+                <p class="text-center">► 57 layers of spaghetti code</p>
+                <p class="text-center">► 57 fake features included</p>
+                <p class="text-center">► 57 ways to fail a map</p>
+                <p class="text-center">► 57 secret Russian agents</p>
+                <p class="text-center">► 57 meme viruses detected</p>
+                <p class="text-center">► 57 dad jokes pre-installed</p>
+                <p class="text-center">► 57 rage quits per hour</p>
+                <p class="text-center">► 57% pure distilled cringe</p>
+                <p class="text-center">► 57 hidden pain points</p>
+                <p class="text-center">► 57 fake statistics</p>
+                <p class="text-center">► 57 ways to hook wrong</p>
+                <p class="text-center">► 57 secret commands</p>
+                <p class="text-center">► 57 hidden meme stashes</p>
+                <p class="text-center">► 57 fake achievements</p>
+                <p class="text-center">► 57 ways to crash</p>
+                <p class="text-center">► 57 hidden easter eggs</p>
+                <p class="text-center">► 57 fake warnings</p>
+                <p class="text-center">► 57 ways to lose sanity</p>
+                <p class="text-center">► 57% useless guarantee</p>
+                <p class="text-center">► 57 hidden traps</p>
+                <p class="text-center">► 57 fake updates</p>
+                <p class="text-center">► 57 ways to get stuck</p>
+                <p class="text-center">► 57 hidden memes</p>
+                <p class="text-center">► 57 fake error messages</p>
+                <p class="text-center">► 57 ways to rage quit</p>
+                <p class="text-center">► 57 hidden jokes</p>
+                <p class="text-center">► 57 fake loading screens</p>
+                <p class="text-center">► 57 ways to fail a hook</p>
+                <p class="text-center">► 57 hidden bugs</p>
+                <p class="text-center">► 57 fake progress bars</p>
+                <p class="text-center">► 57 ways to lose a race</p>
+                <p class="text-center">► 57 hidden features</p>
+                <p class="text-center">► 57 fake notifications</p>
+                <p class="text-center">► 57 ways to get banned</p>
+                <p class="text-center">► 57 hidden messages</p>
+                <p class="text-center">► 57 fake warnings</p>
+                <p class="text-center">► 57 ways to lose points</p>
+                <p class="text-center">► 57 hidden tracks</p>
+                <p class="text-center">► 57 fake achievements</p>
+                <p class="text-center">► 57 ways to fail a jump</p>
+                <p class="text-center">► 57 hidden paths</p>
+                <p class="text-center">► 57 fake leaderboards</p>
+                <p class="text-center">► 57 ways to lose a duel</p>
+                <p class="text-center">► 57 hidden shortcuts</p>
+                <p class="text-center">► 57 fake tutorials</p>
+                <p class="text-center">► 57 ways to get stuck</p>
+                <p class="text-center">► 57 hidden Easter eggs</p>
+                <p class="text-center">► 57 fake error codes</p>
+                <p class="text-center">► 57 ways to lose a match</p>
+                <p class="text-center">► 57 hidden surprises</p>
+                <p class="text-center">► 57 fake loading bars</p>
+                <p class="text-center">► 57 ways to fail a trick</p>
+                <p class="text-center">► 57 hidden treasures</p>
+                <p class="text-center">► 57 fake updates</p>
+                <p class="text-center">► 57 ways to lose a game</p>
+            </div>
+
+            <div class="mt-8 p-4 bg-purple-900 rounded-xl text-center border-2 border-yellow-400">
+                <p class="text-xl md:text-3xl font-bold text-yellow-400 mb-4">
+                    🎪 JOIN THE 57 CLUB! 🎪
+                </p>
+                <p class="text-lg md:text-2xl">
+                    Submit your client with 57 bugs:<br>
+                    <a href="https://t.me/alena000b" class="text-white underline font-bold hover:text-purple-300 animate-pulse">
+                        @alena000b
+                    </a>
+                </p>
+                <p class="mt-2 text-sm md:text-lg text-gray-400">
+                    (Bonus for 570% more cringe)
                 </p>
             </div>
         </div>
 
         <div class="hidden fixed inset-0 bg-black/80 z-50" id="modalOverlay"></div>
-        <div class="hidden fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 bg-gray-900 p-4 md:p-8 rounded-lg w-11/12 max-w-2xl" 
-             id="featuresModal">
+        <div class="hidden bg-gray-900 p-4 md:p-8 rounded-lg z-50" id="featuresModal">
             <h3 class="text-lg md:text-2xl font-bold mb-3 md:mb-4 text-purple-400" id="modalTitle"></h3>
             <ul class="list-disc pl-4 md:pl-6 space-y-1 md:space-y-2 text-xs md:text-base text-gray-300" id="featuresList"></ul>
             <button class="mt-4 md:mt-6 px-3 py-1 md:px-4 md:py-2 bg-purple-600 hover:bg-purple-700 rounded-lg transition-colors text-sm md:text-base" 
-                    onclick="closeModal()">Make it stop! 😫</button>
+                    onclick="closeModal()">Close</button>
         </div>
     </div>
 
     <script>
-        // Theme Management
         function toggleTheme() {
             document.body.classList.toggle('light-mode');
             const themeIcon = document.getElementById('themeIcon');
@@ -195,20 +228,18 @@
             localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
         }
 
-        // Load saved theme
         if(localStorage.getItem('theme') === 'light') {
             document.body.classList.add('light-mode');
             document.getElementById('themeIcon').classList.replace('fa-moon', 'fa-sun');
         }
 
-        // Clients Data
         const clients = [
             {
                 name: "Teeworlds OG",
                 website: "https://teeworlds.com",
                 features: ["Original 2007 cringe", "Nostalgia overdose", "No mods allowed"],
                 filters: ["legit"],
-                description: "Boomer edition",
+                description: "Original Teeworlds client",
                 icon: "https://i.imgur.com/vZ4T7hG.png"
             },
             {
@@ -216,7 +247,7 @@
                 website: "https://cactuss.me",
                 features: ["Spike magnet", "Pain = fun algorithm", "Prickly personality module"],
                 filters: ["legit"],
-                description: "For digital masochists",
+                description: "Customization-focused client",
                 icon: "https://i.imgur.com/3jQZJ9u.png"
             },
             {
@@ -224,7 +255,7 @@
                 website: "https://ddnet.tw",
                 features: ["Boring stability", "Dad joke generator", "Grandma-approved settings"],
                 filters: ["legit"],
-                description: "For basic tees",
+                description: "Main client for DDNet",
                 icon: "https://i.imgur.com/4jKlQrE.png"
             },
             {
@@ -232,7 +263,7 @@
                 website: "https://krxclient.xyz",
                 features: ["Invisible skill", "Time travel (to when you were good)", "Fake pro certificate generator"],
                 filters: ["hack"],
-                description: "Ninja disappointment",
+                description: "Modified client with additional features",
                 icon: "https://i.imgur.com/5tXwJ9y.png"
             },
             {
@@ -240,7 +271,7 @@
                 website: "https://stormaxs.github.io/StA-site/",
                 features: ["Tournament-grade salt", "Legal(ish) wallhacks", "'My cat walked on keyboard' mode"],
                 filters: ["legit"],
-                description: "For tryhard wannabes",
+                description: "Training-oriented client",
                 icon: "https://i.imgur.com/9vZ7W8q.png"
             },
             {
@@ -248,78 +279,57 @@
                 website: null,
                 features: ["AI-generated excuses", "Tear-powered battery", "Shame-o-meter 9000"],
                 filters: ["hack"],
-                description: "For maximum embarrassment",
-                icon: "https://i.imgur.com/6Q3Zz9a.png",
-                alert: "Warning: May cause existential crisis! 😱"
+                description: "Experimental modified client",
+                icon: "https://i.imgur.com/6Q3Zz9a.png"
             },
             {
                 name: "Tater Client",
                 website: "https://tclient.app",
                 features: ["Auto-cry system", "Dramatic slow-mo fails", "Built-in cringe compiler"],
                 filters: ["legit"],
-                description: "For professional noobs",
+                description: "For new players",
                 icon: "https://i.imgur.com/zPqpJDc.png"
             },
             {
                 name: "SASH Client",
                 website: null,
-                features: [
-                    "Stealth mode activated", 
-                    "Auto-ragequit system", 
-                    "Fake 'pro player' aura",
-                    "Invisible fails recorder"
-                ],
+                features: ["Stealth mode activated", "Auto-ragequit system", "Fake 'pro player' aura"],
                 filters: ["hack"],
-                description: "Ghost in the shell",
-                icon: "https://i.imgur.com/7Q7vZwX.png",
-                alert: "SASH? Sounds suspicious! 🕵️♂️"
+                description: "Modified physics client",
+                icon: "https://i.imgur.com/7Q7vZwX.png"
             },
             {
                 name: "DD.CFF",
                 website: null,
                 features: ["Slow-mo fails", "Dramatic camera", "Auto-screenshot"],
                 filters: ["hack"],
-                description: "Cinematic experience",
-                icon: "https://i.imgur.com/7v2W3cG.png",
-                alert: "Good luck finding this one 🍀"
+                description: "Training and recording client",
+                icon: "https://i.imgur.com/7v2W3cG.png"
             },
             {
                 name: "DDNet-rs",
                 website: "https://github.com/ddnet/ddnet-rs",
-                features: [
-                    "FFmpeg demo recording", 
-                    "Portable bundled data",
-                    "Spatial voice chat",
-                    "Steam integration"
-                ],
+                features: ["FFmpeg demo recording", "Portable bundled data", "Spatial voice chat"],
                 filters: ["legit"],
-                description: "Rust-powered evolution",
+                description: "Next-generation client prototype",
                 icon: "https://i.imgur.com/4jKlQrE.png"
             }
         ];
 
-        // Client Interactions
         function handleWebsiteClick(client) {
-            if (client.filters.includes("hack") && !confirm(`WARNING! You're trying to access:\n\n"${client.name}"\n\nAre you ready to embrace the dark side? 🦹`)) return;
-            
-            if (client.alert) {
-                alert(client.alert);
+            if (!client.website) {
+                alert("⚠️ WARNING! ⚠️\nThis client is too dangerous for normal distribution!\nSearch in:\n\n• Deep web forums\n• The 57th dimension\n\nGood hunting! 🔍");
                 return;
             }
-            
-            if (client.website) {
-                window.open(client.website, '_blank');
-            } else {
-                alert("404 Client evaporated!\nMaybe try praying to DDNet gods? 🙏");
-            }
+            window.open(client.website, '_blank');
         }
 
         function showFeatures(clientName) {
-            alert("Secret Sauce appearing in the middle!\n(Like your last braincell during exams) 🧠");
+            alert("💥 FEATURE NUKE INCOMING! 💥\nBrace for impact...");
             const client = clients.find(c => c.name === clientName);
-            document.getElementById('modalTitle').textContent = `${clientName} Sauce Recipe`;
+            document.getElementById('modalTitle').textContent = `${clientName} Features`;
             document.getElementById('featuresList').innerHTML = client.features
-                .map(f => `<li class="text-gray-200">💫 ${f}</li>`).join('');
+                .map(f => `<li class="text-gray-200">💣 ${f}</li>`).join('');
             document.getElementById('modalOverlay').classList.remove('hidden');
             document.getElementById('featuresModal').classList.remove('hidden');
         }
@@ -332,18 +342,15 @@
         function renderClients(filter = "all") {
             const container = document.getElementById('clientsContainer');
             container.innerHTML = '';
-
             clients.forEach(client => {
+                if (filter !== "all" && !client.filters.includes(filter)) return;
                 const card = document.createElement('div');
                 card.className = 'client-card p-4 md:p-6 rounded-xl mb-3 md:mb-4';
                 card.innerHTML = `
                     <div class="flex items-start justify-between mb-3 md:mb-4">
                         <div class="flex items-center">
                             <div class="w-10 h-10 md:w-14 md:h-14 rounded-lg overflow-hidden mr-3 md:mr-4 bg-gray-800">
-                                <img src="${client.icon}" 
-                                     class="w-full h-full object-cover" 
-                                     alt="${client.name}" 
-                                     onerror="this.src='https://i.imgur.com/7Q7vZwX.png'">
+                                <img src="${client.icon}" class="w-full h-full object-cover" alt="${client.name}">
                             </div>
                             <div>
                                 <h2 class="text-lg md:text-2xl font-bold">${client.name}</h2>
@@ -351,7 +358,7 @@
                                 <div class="flex gap-1 md:gap-2 mt-1 md:mt-2">
                                     ${client.filters.map(f => `
                                         <span class="text-[0.6rem] md:text-xs px-1 py-0.5 md:px-2 md:py-1 rounded-full ${f === 'legit' ? 'bg-green-600' : 'bg-red-600'}">
-                                            ${f} ${f === 'android' ? '📱' : ''}
+                                            ${f}
                                         </span>
                                     `).join('')}
                                 </div>
@@ -361,21 +368,18 @@
                     <div class="flex flex-col md:flex-row gap-2 md:gap-3 mt-3 md:mt-4">
                         <button onclick="handleWebsiteClick(${JSON.stringify(client).replace(/"/g, '&quot;')})" 
                            class="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-2 py-2 md:px-4 md:py-3 rounded-lg text-xs md:text-base text-center transition-colors">
-                            <i class="fas fa-external-link-alt mr-1 md:mr-2"></i>Get Disappointment
+                            <i class="fas fa-external-link-alt mr-1 md:mr-2"></i>Visit Website
                         </button>
                         <button onclick="showFeatures('${client.name}')" 
                                 class="flex-1 bg-gray-700 hover:bg-gray-600 text-white px-2 py-2 md:px-4 md:py-3 rounded-lg transition-colors text-xs md:text-base">
-                            <i class="fas fa-info-circle mr-1 md:mr-2"></i>Secret Sauce
+                            <i class="fas fa-info-circle mr-1 md:mr-2"></i>View Features
                         </button>
                     </div>
                 `;
-                
-                if (filter !== "all" && !client.filters.includes(filter)) return;
                 container.appendChild(card);
             });
         }
 
-        // Event Listeners
         document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('ring-2', 'ring-purple-400'));
@@ -384,7 +388,6 @@
             });
         });
 
-        // Initial Render
         renderClients();
     </script>
 </body>
